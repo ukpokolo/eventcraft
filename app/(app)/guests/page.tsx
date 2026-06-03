@@ -52,11 +52,11 @@ export default function GuestsPage() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6">
       {/* Header */}
       <div className="mb-6">
         <h1
-          className="text-2xl font-bold text-gray-900"
+          className="text-xl sm:text-2xl font-bold text-gray-900"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Guests
@@ -67,14 +67,14 @@ export default function GuestsPage() {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Total", value: guests.length, color: "text-gray-700", bg: "bg-gray-50" },
           { label: "Confirmed", value: confirmed, color: "text-emerald-700", bg: "bg-emerald-50" },
           { label: "Pending",   value: pending,   color: "text-amber-700",  bg: "bg-amber-50"  },
           { label: "Declined",  value: declined,  color: "text-red-600",    bg: "bg-red-50"    },
         ].map((s) => (
-          <div key={s.label} className={"rounded-xl p-4 " + s.bg}>
+          <div key={s.label} className={"rounded-xl p-3 sm:p-4 " + s.bg}>
             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{s.label}</p>
             <p className={"text-2xl font-bold mt-1 " + s.color}>{s.value}</p>
           </div>
@@ -83,7 +83,7 @@ export default function GuestsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Add guest form */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-4">
             <Users className="w-4 h-4 text-indigo-500" />
             <h2 className="text-sm font-semibold text-gray-700">Add Guest</h2>
@@ -95,7 +95,7 @@ export default function GuestsPage() {
         </div>
 
         {/* Guest list */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-4 sm:p-5 min-w-0">
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3 mb-4">
             <input

@@ -95,10 +95,10 @@ function CardsPageContent() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6">
       <div className="mb-6">
         <h1
-          className="text-2xl font-bold text-gray-900"
+          className="text-xl sm:text-2xl font-bold text-gray-900"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Card Generator
@@ -112,7 +112,7 @@ function CardsPageContent() {
         {/* Left: controls */}
         <div className="space-y-6">
           {/* Step 1: Event selector */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
             <h2 className="text-sm font-semibold text-gray-700 mb-3">1. Select Event</h2>
             {events.length === 0 ? (
               <EmptyState
@@ -150,7 +150,7 @@ function CardsPageContent() {
           </div>
 
           {/* Step 2: Template picker */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
             <h2 className="text-sm font-semibold text-gray-700 mb-3">2. Choose Template</h2>
             <TemplatePicker
               templates={templates}
@@ -160,7 +160,7 @@ function CardsPageContent() {
           </div>
 
           {/* Step 3: Custom message */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
             <h2 className="text-sm font-semibold text-gray-700 mb-1">
               3. Personal Message{" "}
               <span className="font-normal text-gray-400">(optional)</span>
@@ -179,11 +179,11 @@ function CardsPageContent() {
 
         {/* Right: live preview */}
         <div className="lg:sticky lg:top-6 space-y-4">
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
               <h2 className="text-sm font-semibold text-gray-700">Preview</h2>
               {selectedEvent && selectedTemplate && (
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => {
                       setSelectedEventId(null);

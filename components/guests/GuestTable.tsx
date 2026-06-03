@@ -37,7 +37,67 @@ export function GuestTable({ guests, eventName }: GuestTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <>
+    <div className="sm:hidden space-y-3">
+      {guests.map((g) => {
+        const rsvp = rsvpConfig[g.rsvp];
+        const Icon = rsvp.icon;
+        return (
+          <div key={g.id} className="rounded-xl border border-gray-100 p-4">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                {initials(g.firstName, g.lastName)}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-medium text-gray-800 truncate">{g.firstName} {g.lastName}</p>
+                <p className="text-xs text-gray-500 break-all">{g.email}</p>
+                {g.phone && <p className="text-xs text-gray-400 mt-0.5">{g.phone}</p>}
+                {eventName && (
+                  <p className="text-xs text-gray-500 mt-2 truncate">{eventName(g.eventId)}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <button
+                onClick={() => updateGuest({ id: g.id, data: { rsvp: nextRsvp[g.rsvp] } })}
+                className={"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-opacity hover:opacity-80 " + rsvp.color}
+                title="Click to cycle RSVP status"
+              >
+                <Icon className="w-3 h-3" />
+                {rsvp.label}
+              </button>
+
+              {confirmDeleteId === g.id ? (
+                <span className="flex items-center gap-3">
+                  <button
+                    onClick={() => { deleteGuest(g.id); setConfirmDeleteId(null); }}
+                    className="text-xs text-red-600 font-medium hover:underline"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() => setConfirmDeleteId(null)}
+                    className="text-xs text-gray-400 hover:text-gray-600"
+                  >
+                    Cancel
+                  </button>
+                </span>
+              ) : (
+                <button
+                  onClick={() => setConfirmDeleteId(g.id)}
+                  className="w-9 h-9 rounded-lg bg-red-50 text-red-500 flex items-center justify-center"
+                  title="Remove guest"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    <div className="hidden sm:block overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-100">
@@ -113,5 +173,6 @@ export function GuestTable({ guests, eventName }: GuestTableProps) {
         </tbody>
       </table>
     </div>
+    </>
   );
 }

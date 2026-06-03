@@ -11,7 +11,7 @@ interface SettingsSectionProps {
 
 function SettingsSection({ title, icon: Icon, children }: SettingsSectionProps) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5">
+    <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
       <div className="flex items-center gap-2 mb-5 pb-4 border-b border-gray-100">
         <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
           <Icon className="w-4 h-4" />
@@ -26,12 +26,12 @@ function SettingsSection({ title, icon: Icon, children }: SettingsSectionProps) 
 interface FieldProps { label: string; description?: string; children: React.ReactNode }
 function Field({ label, description, children }: FieldProps) {
   return (
-    <div className="flex items-start justify-between gap-6">
+    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-6">
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-gray-700">{label}</p>
         {description && <p className="text-xs text-gray-400 mt-0.5">{description}</p>}
       </div>
-      <div className="flex-shrink-0">{children}</div>
+      <div className="w-full sm:w-auto sm:flex-shrink-0">{children}</div>
     </div>
   );
 }
@@ -50,7 +50,7 @@ function Toggle({ checked, onChange }: ToggleProps) {
   );
 }
 
-const inputCls = "border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-800 w-48";
+const inputCls = "border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-800 w-full sm:w-48";
 
 export default function SettingsPage() {
   // Profile
@@ -79,11 +79,11 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-6">
-      <div className="mb-6 flex items-start justify-between">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1
-            className="text-2xl font-bold text-gray-900"
+            className="text-xl sm:text-2xl font-bold text-gray-900"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Settings
@@ -92,7 +92,7 @@ export default function SettingsPage() {
         </div>
         <button
           onClick={handleSave}
-          className={"flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all " + (saved ? "bg-emerald-500 text-white" : "bg-indigo-600 hover:bg-indigo-700 text-white")}
+          className={"inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all " + (saved ? "bg-emerald-500 text-white" : "bg-indigo-600 hover:bg-indigo-700 text-white")}
         >
           <Save className="w-4 h-4" />
           {saved ? "Saved!" : "Save Changes"}

@@ -10,19 +10,19 @@ interface ReminderFormProps {
   isLoading?: boolean;
 }
 
-const typeOptions: { value: ReminderType; label: string; emoji: string }[] = [
-  { value: "email", label: "Email", emoji: "✉️" },
-  { value: "sms",   label: "SMS",   emoji: "💬" },
-  { value: "push",  label: "Push",  emoji: "🔔" },
+const typeOptions: { value: ReminderType; label: string }[] = [
+  { value: "email", label: "Email" },
+  { value: "sms", label: "SMS" },
+  { value: "push", label: "Push" },
 ];
 
 const triggerOptions: { value: TriggerBefore; label: string }[] = [
   { value: "15m", label: "15 minutes before" },
-  { value: "1h",  label: "1 hour before" },
-  { value: "3h",  label: "3 hours before" },
+  { value: "1h", label: "1 hour before" },
+  { value: "3h", label: "3 hours before" },
   { value: "24h", label: "24 hours before" },
   { value: "48h", label: "48 hours before" },
-  { value: "1w",  label: "1 week before" },
+  { value: "1w", label: "1 week before" },
 ];
 
 const inputCls = "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-800 placeholder-gray-400";
@@ -62,7 +62,7 @@ export function ReminderForm({ defaultEventId, onSubmit, isLoading }: ReminderFo
 
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-2">Reminder Type *</label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 min-[380px]:grid-cols-3 gap-2">
           {typeOptions.map((t, i) => (
             <label key={t.value} className="cursor-pointer">
               <input
@@ -72,8 +72,7 @@ export function ReminderForm({ defaultEventId, onSubmit, isLoading }: ReminderFo
                 defaultChecked={i === 0}
                 className="sr-only peer"
               />
-              <div className="border-2 border-gray-200 rounded-lg py-2 text-center text-sm transition-all peer-checked:border-indigo-500 peer-checked:bg-indigo-50 hover:border-indigo-300">
-                <span className="block text-base">{t.emoji}</span>
+              <div className="border-2 border-gray-200 rounded-lg py-2 text-center transition-all peer-checked:border-indigo-500 peer-checked:bg-indigo-50 hover:border-indigo-300">
                 <span className="text-xs font-medium text-gray-700">{t.label}</span>
               </div>
             </label>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import type {
   Event, CreateEventInput, UpdateEventInput,
   Guest, CreateGuestInput, UpdateGuestInput,
@@ -7,94 +6,107 @@ import type {
   User, RegisterInput,
 } from "@/types";
 
-// ─── Axios instance ───────────────────────────────────────────────────────────
-// json-server runs on port 3001. Next.js dev server on 3000.
+const API_BASE = "/api";
 
-const api = axios.create({
-  baseURL: "http://localhost:3001",
-  headers: { "Content-Type": "application/json" },
-});
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const response = await fetch(`${API_BASE}${path}`, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
 
-// ─── Events ───────────────────────────────────────────────────────────────────
+  if (!response.ok) {
+    const error = await response.json().catch(() => null);
+    throw new Error(error?.message ?? `Request failed with ${response.status}`);
+  }
+
+  if (response.status === 204) {
+    return undefined as T;
+  }
+
+  return response.json() as Promise<T>;
+}
+
+const jsonBody = (data: unknown) => JSON.stringify(data);
 
 export const eventsApi = {
   getAll: () =>
-    api.get<Event[]>("/events").then((r) => r.data),
+    request<Event[]>("/events"),
 
   getById: (id: number) =>
-    api.get<Event>(`/events/${id}`).then((r) => r.data),
+    request<Event>(`/events/${id}`),
 
   create: (data: CreateEventInput) =>
-    api.post<Event>("/events", data).then((r) => r.data),
+    request<Event>("/events", { method: "POST", body: jsonBody(data) }),
 
   update: (id: number, data: UpdateEventInput) =>
-    api.patch<Event>(`/events/${id}`, data).then((r) => r.data),
+    request<Event>(`/events/${id}`, { method: "PATCH", body: jsonBody(data) }),
 
   remove: (id: number) =>
-    api.delete(`/events/${id}`).then((r) => r.data),
+    request<void>(`/events/${id}`, { method: "DELETE" }),
 };
-
-// ─── Guests ───────────────────────────────────────────────────────────────────
 
 export const guestsApi = {
   getAll: () =>
-    api.get<Guest[]>("/guests").then((r) => r.data),
+    request<Guest[]>("/guests"),
 
   getByEvent: (eventId: number) =>
-    api.get<Guest[]>(`/guests?eventId=${eventId}`).then((r) => r.data),
+    request<Guest[]>(`/guests?eventId=${eventId}`),
 
   create: (data: CreateGuestInput) =>
-    api.post<Guest>("/guests", data).then((r) => r.data),
+    request<Guest>("/guests", { method: "POST", body: jsonBody(data) }),
 
   update: (id: number, data: UpdateGuestInput) =>
-    api.patch<Guest>(`/guests/${id}`, data).then((r) => r.data),
+    request<Guest>(`/guests/${id}`, { method: "PATCH", body: jsonBody(data) }),
 
   remove: (id: number) =>
-    api.delete(`/guests/${id}`).then((r) => r.data),
+    request<void>(`/guests/${id}`, { method: "DELETE" }),
 };
-
-// ─── Reminders ────────────────────────────────────────────────────────────────
 
 export const remindersApi = {
   getAll: () =>
-    api.get<Reminder[]>("/reminders").then((r) => r.data),
+    request<Reminder[]>("/reminders"),
 
   getByEvent: (eventId: number) =>
-    api.get<Reminder[]>(`/reminders?eventId=${eventId}`).then((r) => r.data),
+    request<Reminder[]>(`/reminders?eventId=${eventId}`),
 
   create: (data: CreateReminderInput) =>
-    api.post<Reminder>("/reminders", {
-      ...data,
-      status: "scheduled",
-      createdAt: new Date().toISOString().slice(0, 10),
-    }).then((r) => r.data),
+    request<Reminder>("/reminders", {
+      method: "POST",
+      body: jsonBody({
+        ...data,
+        status: "scheduled",
+        createdAt: new Date().toISOString().slice(0, 10),
+      }),
+    }),
 
   update: (id: number, data: Partial<Reminder>) =>
-    api.patch<Reminder>(`/reminders/${id}`, data).then((r) => r.data),
+    request<Reminder>(`/reminders/${id}`, { method: "PATCH", body: jsonBody(data) }),
 
   remove: (id: number) =>
-    api.delete(`/reminders/${id}`).then((r) => r.data),
+    request<void>(`/reminders/${id}`, { method: "DELETE" }),
 };
-
-// ─── Templates ────────────────────────────────────────────────────────────────
 
 export const templatesApi = {
   getAll: () =>
-    api.get<CardTemplate[]>("/templates").then((r) => r.data),
+    request<CardTemplate[]>("/templates"),
 };
-
-// Users / Auth
 
 export const usersApi = {
   getAll: () =>
-    api.get<User[]>("/users").then((r) => r.data),
+    request<User[]>("/users"),
 
   getByEmail: (email: string) =>
-    api.get<User[]>(`/users?email=${email}`).then((r) => r.data),
+    request<User[]>(`/users?email=${encodeURIComponent(email)}`),
 
   create: (data: RegisterInput) =>
-    api.post<User>("/users", {
-      ...data,
-      createdAt: new Date().toISOString().slice(0, 10),
-    }).then((r) => r.data),
+    request<User>("/users", {
+      method: "POST",
+      body: jsonBody({
+        ...data,
+        createdAt: new Date().toISOString().slice(0, 10),
+      }),
+    }),
 };

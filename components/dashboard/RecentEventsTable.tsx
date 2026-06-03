@@ -51,7 +51,44 @@ export function RecentEventsTable({ events, guests }: RecentEventsTableProps) {
           }
         />
       ) : (
-        <div className="overflow-x-auto">
+        <>
+        <div className="sm:hidden divide-y divide-gray-100">
+          {recent.map((event) => {
+            const guestCount = guests.filter((g) => g.eventId === event.id).length;
+            return (
+              <Link
+                key={event.id}
+                href={`/events/${event.id}`}
+                className="block px-4 py-4 hover:bg-gray-50"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                        style={{ background: event.color }}
+                      />
+                      <p className="font-medium text-gray-800 truncate">{event.name}</p>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1 truncate">{event.venue}</p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {formatDate(event.date)} {formatTime(event.time)}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                    <Badge variant="info">{guestCount}</Badge>
+                    <span
+                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${EVENT_STATUS_COLORS[event.status]}`}
+                    >
+                      {EVENT_STATUS_LABELS[event.status]}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/60">
@@ -119,6 +156,7 @@ export function RecentEventsTable({ events, guests }: RecentEventsTableProps) {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </Card>
   );

@@ -39,7 +39,7 @@ export function GuestForm({ defaultEventId, onSubmit, isLoading, submitLabel = "
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 min-[380px]:grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">First Name *</label>
           <input name="firstName" required placeholder="Amaka" className={inputCls} />

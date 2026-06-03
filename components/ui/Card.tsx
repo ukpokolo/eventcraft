@@ -11,7 +11,7 @@ export function Card({ children, className, padding = false }: CardProps) {
     <div
       className={cn(
         "bg-white rounded-xl border border-gray-200 shadow-sm",
-        padding && "p-5",
+        padding && "p-4 sm:p-5",
         className
       )}
     >
@@ -30,7 +30,7 @@ export function CardHeader({
   return (
     <div
       className={cn(
-        "flex items-center justify-between px-5 py-4 border-b border-gray-100",
+        "flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-b border-gray-100",
         className
       )}
     >
@@ -50,5 +50,5 @@ export function CardBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn("p-5", className)}>{children}</div>;
+  return <div className={cn("p-4 sm:p-5", className)}>{children}</div>;
 }

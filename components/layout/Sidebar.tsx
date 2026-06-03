@@ -11,6 +11,7 @@ import {
   BellRing,
   Settings,
   LogOut,
+  X,
 } from "lucide-react";
 import { cn, initials } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -25,7 +26,12 @@ const NAV_ITEMS = [
   { href: "/settings",       label: "Settings",          icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  mobile?: boolean;
+  onNavigate?: () => void;
+}
+
+export function Sidebar({ mobile = false, onNavigate }: SidebarProps) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
@@ -34,18 +40,35 @@ export function Sidebar() {
   const avatarLetters = user ? initials(user.firstName, user.lastName) : "?";
 
   return (
-    <aside className="w-[220px] flex-shrink-0 flex flex-col h-full"
-           style={{ background: "#1a1a2e" }}>
+    <aside
+      className={cn(
+        "w-[260px] md:w-[220px] flex-shrink-0 flex flex-col h-full",
+        mobile ? "shadow-2xl" : "hidden md:flex"
+      )}
+      style={{ background: "#1a1a2e" }}
+    >
 
       {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/10">
-        <p className="text-white font-bold text-lg leading-tight"
-           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-          EventCraft
-        </p>
-        <p className="text-white/40 text-[10px] tracking-widest uppercase mt-0.5">
-          Event Management
-        </p>
+      <div className="px-5 py-5 border-b border-white/10 flex items-start justify-between gap-3">
+        <div>
+          <p className="text-white font-bold text-lg leading-tight"
+             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+            EventCraft
+          </p>
+          <p className="text-white/40 text-[10px] tracking-widest uppercase mt-0.5">
+            Event Management
+          </p>
+        </div>
+        {mobile && (
+          <button
+            type="button"
+            onClick={onNavigate}
+            aria-label="Close navigation"
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* Nav */}
@@ -56,6 +79,7 @@ export function Sidebar() {
             <Link
               key={href}
               href={href}
+              onClick={onNavigate}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm",
                 "transition-all duration-150 font-medium",
@@ -86,7 +110,10 @@ export function Sidebar() {
           </div>
         </div>
         <button
-          onClick={logout}
+          onClick={() => {
+            onNavigate?.();
+            logout();
+          }}
           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs
                      text-white/50 hover:text-white/90 hover:bg-white/8
                      transition-all font-medium"

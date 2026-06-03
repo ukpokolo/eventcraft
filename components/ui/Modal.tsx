@@ -46,7 +46,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       aria-modal="true"
       role="dialog"
       aria-labelledby="modal-title"
@@ -60,13 +60,13 @@ export function Modal({
       {/* Panel */}
       <div
         className={cn(
-          "relative w-full bg-white rounded-2xl shadow-2xl",
-          "flex flex-col max-h-[90vh]",
+          "relative w-full bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl",
+          "flex flex-col max-h-[92dvh] sm:max-h-[90vh]",
           sizeMap[size]
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100 flex-shrink-0">
           <h2
             id="modal-title"
             className="text-lg font-semibold text-gray-900"
@@ -86,11 +86,11 @@ export function Modal({
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5">{children}</div>
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 flex-shrink-0">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 px-4 sm:px-6 py-4 border-t border-gray-100 flex-shrink-0">
             {footer}
           </div>
         )}

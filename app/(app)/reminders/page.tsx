@@ -71,10 +71,10 @@ function RemindersPageContent() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6">
       <div className="mb-6">
         <h1
-          className="text-2xl font-bold text-gray-900"
+          className="text-xl sm:text-2xl font-bold text-gray-900"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Reminders
@@ -85,14 +85,14 @@ function RemindersPageContent() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Total",     value: reminders.length, color: "text-gray-700",   bg: "bg-gray-50"    },
           { label: "Scheduled", value: scheduled,         color: "text-blue-700",   bg: "bg-blue-50"    },
           { label: "Sent",      value: sent,              color: "text-emerald-700", bg: "bg-emerald-50" },
           { label: "Failed",    value: failed,            color: "text-red-600",    bg: "bg-red-50"     },
         ].map((s) => (
-          <div key={s.label} className={"rounded-xl p-4 " + s.bg}>
+          <div key={s.label} className={"rounded-xl p-3 sm:p-4 " + s.bg}>
             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{s.label}</p>
             <p className={"text-2xl font-bold mt-1 " + s.color}>{s.value}</p>
           </div>
@@ -101,7 +101,7 @@ function RemindersPageContent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Schedule form */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-4">
             <Bell className="w-4 h-4 text-indigo-500" />
             <h2 className="text-sm font-semibold text-gray-700">New Reminder</h2>
@@ -114,7 +114,7 @@ function RemindersPageContent() {
         </div>
 
         {/* Reminder list */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-4 sm:p-5 min-w-0">
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3 mb-5">
             <select

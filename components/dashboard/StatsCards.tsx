@@ -20,21 +20,21 @@ interface StatCardProps {
 
 function StatCard({ label, value, sub, icon, iconBg, iconColor }: StatCardProps) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5">
       <div className="flex items-start justify-between">
-        <div>
+        <div className="min-w-0">
           <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
             {label}
           </p>
           <p
-            className="text-3xl font-bold text-gray-900 leading-none"
+            className="text-2xl sm:text-3xl font-bold text-gray-900 leading-none"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             {value}
           </p>
           <p className="text-xs text-gray-400 mt-1.5">{sub}</p>
         </div>
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${iconBg}`}>
+        <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${iconBg}`}>
           <span className={iconColor}>{icon}</span>
         </div>
       </div>
@@ -83,7 +83,7 @@ export function StatsCards({ events, guests, reminders }: StatsCardsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 min-[420px]:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
       {stats.map((s) => (
         <StatCard key={s.label} {...s} />
       ))}

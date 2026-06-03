@@ -57,10 +57,10 @@ export function EventsTable({
     .sort((a, b) => b.id - a.id);   // newest first
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm min-w-0">
 
       {/* ── toolbar ── */}
-      <div className="flex flex-col sm:flex-row gap-3 px-5 py-4 border-b border-gray-100">
+      <div className="flex flex-col sm:flex-row gap-3 px-4 sm:px-5 py-4 border-b border-gray-100">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
           <input
@@ -98,7 +98,87 @@ export function EventsTable({
           }
         />
       ) : (
-        <div className="overflow-x-auto">
+        <>
+        <div className="sm:hidden divide-y divide-gray-100">
+          {filtered.map((event) => {
+            const guestCount = guests.filter((g) => g.eventId === event.id).length;
+            const reminderCount = reminders.filter((r) => r.eventId === event.id).length;
+            return (
+              <div key={event.id} className="p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-3 h-3 rounded-full flex-shrink-0"
+                        style={{ background: event.color }}
+                      />
+                      <Link
+                        href={`/events/${event.id}`}
+                        className="font-semibold text-gray-900 truncate hover:text-indigo-600"
+                      >
+                        {event.name}
+                      </Link>
+                    </div>
+                    {event.description && (
+                      <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+                        {event.description}
+                      </p>
+                    )}
+                  </div>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium flex-shrink-0 ${EVENT_STATUS_COLORS[event.status]}`}
+                  >
+                    {EVENT_STATUS_LABELS[event.status]}
+                  </span>
+                </div>
+
+                <div className="mt-3 space-y-1 text-xs text-gray-500">
+                  <p>{formatDate(event.date)} <span className="text-gray-400">{formatTime(event.time)}</span></p>
+                  <p className="truncate">{event.venue}</p>
+                </div>
+
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <Badge variant="info">{guestCount} guest{guestCount !== 1 ? "s" : ""}</Badge>
+                  <Badge variant={reminderCount > 0 ? "success" : "muted"}>
+                    {reminderCount} set
+                  </Badge>
+                </div>
+
+                <div className="mt-4 grid grid-cols-4 gap-2">
+                  <button
+                    onClick={() => onEdit(event)}
+                    title="Edit event"
+                    className="h-10 rounded-lg bg-gray-50 text-gray-500 flex items-center justify-center"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onCard(event)}
+                    title="Generate card"
+                    className="h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center"
+                  >
+                    <Layers className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onRemind(event)}
+                    title="Add reminder"
+                    className="h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"
+                  >
+                    <Bell className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(event)}
+                    title="Delete event"
+                    className="h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/60">
@@ -223,11 +303,12 @@ export function EventsTable({
             </tbody>
           </table>
         </div>
+        </>
       )}
 
       {/* ── footer count ── */}
       {filtered.length > 0 && (
-        <div className="px-5 py-3 border-t border-gray-50 bg-gray-50/40">
+        <div className="px-4 sm:px-5 py-3 border-t border-gray-50 bg-gray-50/40">
           <p className="text-xs text-gray-400">
             Showing {filtered.length} of {events.length} event{events.length !== 1 ? "s" : ""}
           </p>

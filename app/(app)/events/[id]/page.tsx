@@ -49,7 +49,7 @@ export default function EventDetailPage({ params }: Props) {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-6">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6">
       {/* Back nav */}
       <button
         onClick={() => router.back()}
@@ -60,7 +60,7 @@ export default function EventDetailPage({ params }: Props) {
 
       {/* Hero card */}
       <div
-        className="rounded-2xl p-7 text-white mb-6 relative overflow-hidden"
+        className="rounded-2xl p-5 sm:p-7 text-white mb-6 relative overflow-hidden"
         style={{ background: event.color }}
       >
         {/* Decorative circle */}
@@ -72,7 +72,7 @@ export default function EventDetailPage({ params }: Props) {
             {event.status}
           </span>
           <h1
-            className="text-3xl font-bold leading-tight mb-2"
+            className="text-2xl sm:text-3xl font-bold leading-tight mb-2 pr-0 lg:pr-64"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             {event.name}
@@ -81,7 +81,7 @@ export default function EventDetailPage({ params }: Props) {
             <p className="text-white/70 text-sm max-w-xl">{event.description}</p>
           )}
 
-          <div className="flex flex-wrap gap-5 mt-5">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-5 mt-5">
             <div className="flex items-center gap-2 text-white/80 text-sm">
               <Calendar className="w-4 h-4 opacity-60" />
               {formatDate(event.date)}
@@ -98,7 +98,7 @@ export default function EventDetailPage({ params }: Props) {
         </div>
 
         {/* Action buttons */}
-        <div className="absolute top-5 right-5 flex gap-2">
+        <div className="relative sm:absolute sm:top-5 sm:right-5 flex flex-wrap gap-2 mt-5 sm:mt-0">
           <Link
             href={`/cards?eventId=${event.id}`}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-medium rounded-lg transition-colors backdrop-blur-sm"
@@ -121,7 +121,7 @@ export default function EventDetailPage({ params }: Props) {
       </div>
 
       {/* Stats strip */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Total Guests",   value: guests.length,      icon: Users, color: "text-indigo-600 bg-indigo-50" },
           { label: "Confirmed",      value: confirmedGuests,    icon: Users, color: "text-emerald-600 bg-emerald-50" },
@@ -141,7 +141,7 @@ export default function EventDetailPage({ params }: Props) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Guests */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 min-w-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
               <Users className="w-4 h-4 text-indigo-400" /> Guests ({guests.length})
@@ -182,7 +182,7 @@ export default function EventDetailPage({ params }: Props) {
         </div>
 
         {/* Reminders */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 min-w-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
               <Bell className="w-4 h-4 text-indigo-400" /> Reminders ({reminders.length})
@@ -223,13 +223,13 @@ export default function EventDetailPage({ params }: Props) {
       </div>
 
       {/* Danger zone */}
-      <div className="mt-6 bg-white rounded-xl border border-red-100 p-5">
+      <div className="mt-6 bg-white rounded-xl border border-red-100 p-4 sm:p-5">
         <h2 className="text-sm font-semibold text-red-600 mb-2">Danger Zone</h2>
         <p className="text-xs text-gray-500 mb-3">
           Permanently delete this event and all its associated guests and reminders. This cannot be undone.
         </p>
         {confirmDelete ? (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <span className="text-sm text-gray-700">Are you sure?</span>
             <button
               onClick={handleDelete}
