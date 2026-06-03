@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Download, RefreshCw } from "lucide-react";
+import html2canvas from "html2canvas";
 import { useEvents } from "@/hooks/useEvents";
 import { useTemplates } from "@/hooks/useTemplates";
 import { useGuestsByEvent } from "@/hooks/useGuests";
@@ -53,38 +54,31 @@ function CardsPageContent() {
 
   const isLoading = eventsLoading || templatesLoading;
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(async () => {
     if (!selectedEvent || !selectedTemplate) return;
     const el = document.getElementById("invitation-card");
     if (!el) return;
     const safeName = selectedEvent.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
-    const html = [
-      "<!DOCTYPE html>",
-      "<html lang=\"en\">",
-      "<head>",
-      '  <meta charset="UTF-8" />',
-      "  <title>Invitation</title>",
-      '  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />',
-      "  <style>",
-      "    body { margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh; background:#f3f4f6; }",
-      "    .wrap { max-width:480px; width:90%; border-radius:16px; overflow:hidden; box-shadow:0 25px 50px rgba(0,0,0,.25); }",
-      "  </style>",
-      "</head>",
-      "<body>",
-      '  <div class="wrap">',
-      el.outerHTML,
-      "  </div>",
-      "</body>",
-      "</html>",
-    ].join("\n");
-    const blob = new Blob([html], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "invitation-" + safeName + ".html";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+    try {
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null,
+      });
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/png")
+      );
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "invitation-" + safeName + ".png";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      // fallback silently
+    }
+  }, [selectedEvent, selectedTemplate]);
 
   if (isLoading) {
     return (
