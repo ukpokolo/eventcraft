@@ -1,0 +1,120 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": "Annual Graduation Dinner",
+      "date": "2026-06-15",
+      "time": "18:00",
+      "venue": "Eko Hotel & Suites, Lagos",
+      "description": "Faculty of Education annual graduation dinner ceremony",
+      "status": "upcoming",
+      "color": "#1a1a2e"
+    },
+    {
+      "id": 2,
+      "name": "Tech Innovation Summit",
+      "date": "2026-07-20",
+      "time": "09:00",
+      "venue": "NOUN Study Centre, Victoria Island",
+      "description": "Educational technology conference for professionals",
+      "status": "upcoming",
+      "color": "#0d4f3c"
+    },
+    {
+      "id": 3,
+      "name": "Farewell Party – Dr. Okafor",
+      "date": "2026-04-10",
+      "time": "16:00",
+      "venue": "Radisson Blu Hotel, Lagos",
+      "description": "Retirement celebration for Dr. Okafor",
+      "status": "completed",
+      "color": "#9d4b6b"
+    }
+  ],
+  "guests": [
+    {
+      "id": 1,
+      "firstName": "Amaka",
+      "lastName": "Okonkwo",
+      "email": "amaka.o@email.com",
+      "phone": "+234 801 234 5678",
+      "eventId": 1,
+      "rsvp": "confirmed"
+    },
+    {
+      "id": 2,
+      "firstName": "Ibrahim",
+      "lastName": "Musa",
+      "email": "ibrahim.m@noun.edu.ng",
+      "phone": "+234 802 345 6789",
+      "eventId": 1,
+      "rsvp": "confirmed"
+    },
+    {
+      "id": 3,
+      "firstName": "Blessing",
+      "lastName": "Eze",
+      "email": "blessing.e@gmail.com",
+      "phone": "+234 803 456 7890",
+      "eventId": 2,
+      "rsvp": "pending"
+    },
+    {
+      "id": 4,
+      "firstName": "Taiwo",
+      "lastName": "Babatunde",
+      "email": "taiwo.b@email.com",
+      "phone": "+234 806 789 0123",
+      "eventId": 3,
+      "rsvp": "confirmed"
+    }
+  ],
+  "reminders": [
+    {
+      "id": 1,
+      "eventId": 1,
+      "type": "email",
+      "triggerBefore": "24h",
+      "message": "",
+      "status": "scheduled",
+      "createdAt": "2026-05-01"
+    },
+    {
+      "id": 2,
+      "eventId": 1,
+      "type": "sms",
+      "triggerBefore": "1h",
+      "message": "Event starts soon!",
+      "status": "scheduled",
+      "createdAt": "2026-05-01"
+    },
+    {
+      "id": 3,
+      "eventId": 3,
+      "type": "email",
+      "triggerBefore": "24h",
+      "message": "",
+      "status": "sent",
+      "createdAt": "2026-04-08"
+    }
+  ],
+  "templates": [
+    { "id": 1, "name": "Midnight Luxe",  "bg": "#1a1a2e", "textColor": "#f5a623" },
+    { "id": 2, "name": "Blush Garden",   "bg": "#f8e1e7", "textColor": "#9d4b6b" },
+    { "id": 3, "name": "Classic Ivory",  "bg": "#fefaf0", "textColor": "#5c4a1e" },
+    { "id": 4, "name": "Deep Emerald",   "bg": "#0d4f3c", "textColor": "#a8e6cf" },
+    { "id": 5, "name": "Royal Blue",     "bg": "#1a237e", "textColor": "#e3f2fd" },
+    { "id": 6, "name": "Sunset Warm",    "bg": "#e65c00", "textColor": "#fff3cd" }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Adeyemi",
+      "email": "john@eventcraft.com",
+      "password": "password123",
+      "role": "Event Coordinator",
+      "createdAt": "2026-01-01"
+    }
+  ]
+}

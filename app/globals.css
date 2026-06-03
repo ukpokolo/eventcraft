@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ──────────────────────────────────────────────────────────*/
+:root {
+  --brand:       #1a1a2e;
+  --brand-dark:  #16213e;
+  --accent:      #e94560;
+  --accent-hover:#d03050;
+  --accent-gold: #f5a623;
+}
+
+/* ─── Base resets ────────────────────────────────────────────────────────────*/
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #f4f5f7;
+  color: #1a1a2e;
+  font-family: "DM Sans", "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────*/
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
+
+/* ─── Focus ring ─────────────────────────────────────────────────────────────*/
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
